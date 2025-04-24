@@ -1,0 +1,451 @@
+.settings-page {
+  padding: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.page-header h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.settings-container {
+  display: flex;
+  gap: 30px;
+}
+
+/* Settings Sidebar */
+.settings-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.setting-tab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  background: rgba(14, 14, 30, 0.7);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(106, 17, 203, 0.2);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.setting-tab:hover {
+  background: rgba(106, 17, 203, 0.1);
+  border-color: rgba(106, 17, 203, 0.4);
+  transform: translateX(5px);
+  color: var(--text);
+}
+
+.setting-tab.active {
+  background: rgba(106, 17, 203, 0.2);
+  border-color: rgba(106, 17, 203, 0.5);
+  color: var(--text);
+  transform: translateX(10px);
+  box-shadow: 0 5px 15px rgba(106, 17, 203, 0.2);
+}
+
+.tab-icon {
+  font-size: 1.2rem;
+}
+
+/* Settings Content */
+.settings-content {
+  flex: 1;
+  min-height: 600px;
+}
+
+/* Privacy Settings */
+.privacy-settings {
+  width: 100%;
+}
+
+.settings-section {
+  margin-bottom: 40px;
+}
+
+.settings-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  background: linear-gradient(45deg, var(--primary-light), var(--secondary-light));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.section-description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 25px;
+  max-width: 800px;
+  line-height: 1.5;
+}
+
+.privacy-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.privacy-card {
+  background: rgba(14, 14, 30, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: 1px solid rgba(106, 17, 203, 0.2);
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.privacy-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-color: rgba(106, 17, 203, 0.4);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.card-header h3 {
+  font-size: 1.2rem;
+}
+
+.privacy-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.privacy-badge.secure {
+  background: rgba(46, 213, 115, 0.2);
+  border: 1px solid rgba(46, 213, 115, 0.4);
+  color: #2ecc71;
+}
+
+.privacy-badge.warning {
+  background: rgba(255, 165, 2, 0.2);
+  border: 1px solid rgba(255, 165, 2, 0.4);
+  color: #ffa502;
+}
+
+.card-description {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.card-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.setting-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.setting-option:last-child {
+  border-bottom: none;
+}
+
+.option-name {
+  font-size: 0.95rem;
+  margin-bottom: 3px;
+}
+
+.option-description {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* Toggle Switch */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .switch-slider {
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+}
+
+input:focus + .switch-slider {
+  box-shadow: 0 0 1px var(--primary);
+}
+
+input:checked + .switch-slider:before {
+  transform: translateX(24px);
+}
+
+input:disabled + .switch-slider {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Select Input */
+.select-input {
+  padding: 8px 12px;
+  background: rgba(14, 14, 30, 0.7);
+  border: 1px solid rgba(106, 17, 203, 0.3);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 0.9rem;
+  width: 120px;
+}
+
+.select-input:focus {
+  outline: none;
+  border-color: rgba(106, 17, 203, 0.6);
+}
+
+/* Settings Save Button */
+.settings-save {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.save-button {
+  padding: 10px 25px;
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+}
+
+/* Telemetry Info */
+.telemetry-info {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(14, 14, 30, 0.5);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.telemetry-info p {
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.telemetry-info ul {
+  margin-bottom: 15px;
+  padding-left: 20px;
+}
+
+.telemetry-info li {
+  margin-bottom: 5px;
+}
+
+.telemetry-info strong {
+  color: var(--text);
+}
+
+/* Export Import Container */
+.export-import-container {
+  width: 100%;
+}
+
+.export-import-tabs {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.export-import-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px;
+  background: rgba(14, 14, 30, 0.7);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(106, 17, 203, 0.2);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.export-import-tab:hover {
+  background: rgba(106, 17, 203, 0.1);
+  border-color: rgba(106, 17, 203, 0.4);
+  transform: translateY(-3px);
+  color: var(--text);
+}
+
+.export-import-tab.active {
+  background: rgba(106, 17, 203, 0.2);
+  border-color: rgba(106, 17, 203, 0.5);
+  color: var(--text);
+  box-shadow: 0 5px 15px rgba(106, 17, 203, 0.2);
+}
+
+.export-import-content {
+  min-height: 500px;
+}
+
+/* Loading Container */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(106, 17, 203, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--primary);
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-container p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+  .settings-container {
+    flex-direction: column;
+  }
+  
+  .settings-sidebar {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .setting-tab {
+    flex: 1;
+    min-width: 160px;
+  }
+  
+  .setting-tab.active {
+    transform: translateY(-5px);
+  }
+  
+  .setting-tab:hover {
+    transform: translateY(-5px);
+  }
+}
+
+@media (max-width: 768px) {
+  .settings-page {
+    padding: 20px;
+  }
+  
+  .page-header h1 {
+    font-size: 2.2rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  .privacy-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .setting-option {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .toggle-switch {
+    align-self: flex-end;
+  }
+  
+  .export-import-tabs {
+    flex-direction: column;
+  }
+}

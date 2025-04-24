@@ -1,0 +1,224 @@
+const express = require('express');
+const cors = require('cors');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const { v4: uuidv4 } = require('uuid');
+const sharp = require('sharp');
+const { analyzeImageWithGemini, extractSearchCriteriaFromQuery } = require('./gemini');
+const dbManager = require('./db-manager');
+const storageRoutes = require('./routes/storage-routes');
+require('dotenv').config();
+
+const app = express();
+const port = process.env.PORT || 3001;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Initialize the database
+dbManager.initializeDatabase()
+  .then(() => {
+    console.log('Database initialized successfully');
+  })
+  .catch(err => {
+    console.error('Failed to initialize database:', err);
+    process.exit(1);
+  });
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadDir = path.join(__dirname, 'uploads');
+    
+    // Create the uploads directory if it doesn't exist
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, `${uuidv4()}${ext}`);
+  }
+});
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB max file size
+  fileFilter: async (req, file, cb) => {
+    const allowedTypes = /jpeg|jpg|png|gif|webp/i;
+    const isValidType = allowedTypes.test(path.extname(file.originalname)) && 
+                        allowedTypes.test(file.mimetype);
+    
+    if (!isValidType) {
+      return cb(new Error('Invalid file type. Only JPEG, PNG, GIF, and WebP files are allowed.'));
+    }
+    
+    // Check if storage limit is reached
+    try {
+      const limitReached = await dbManager.isStorageLimitReached();
+      if (limitReached) {
+        return cb(new Error('Storage limit reached. Please free up some space.'));
+      }
+      
+      cb(null, true);
+    } catch (error) {
+      cb(error);
+    }
+  }
+});
+
+// Use storage routes
+app.use('/api/storage', storageRoutes);
+
+// Routes
+
+// Get all images
+app.get('/api/images', async (req, res) => {
+  // ... existing route
+});
+
+// Get a single image by ID
+app.get('/api/images/:id', async (req, res) => {
+  // ... existing route
+});
+
+// Search images
+app.post('/api/search', async (req, res) => {
+  // ... existing route
+});
+
+// Natural language search
+app.post('/api/natural-search', async (req, res) => {
+  // ... existing route
+});
+
+// Get related images
+app.get('/api/images/related/:id', async (req, res) => {
+  // ... existing route
+});
+
+// Get statistics
+app.get('/api/stats', async (req, res) => {
+  // ... existing route
+});
+
+// Upload images
+app.post('/api/upload', upload.array('images', 10), async (req, res) => {
+  // ... existing route
+});
+
+// Database maintenance and settings
+
+// Get all settings
+app.get('/api/settings', async (req, res) => {
+  // ... existing route
+});
+
+// Update settings
+app.post('/api/settings', async (req, res) => {
+  // ... existing route
+});
+
+// Create backup
+app.post('/api/backup', async (req, res) => {
+  // ... existing route
+});
+
+// List backups
+app.get('/api/backups', (req, res) => {
+  // ... existing route
+});
+
+// Delete backup
+app.delete('/api/backups/:filename', (req, res) => {
+  // ... existing route
+});
+
+// Optimize database
+app.post('/api/optimize', async (req, res) => {
+  // ... existing route
+});
+
+// Cleanup unused files
+app.post('/api/cleanup', async (req, res) => {
+  // ... existing route
+});
+
+// Update storage limit
+app.post('/api/storage-limit', async (req, res) => {
+  // ... existing route
+});
+
+// Export images
+app.post('/api/export', async (req, res) => {
+  // ... existing route
+});
+
+// Set image privacy
+app.put('/api/images/:id/privacy', async (req, res) => {
+  // ... existing route
+});
+
+// Delete image
+app.delete('/api/images/:id', async (req, res) => {
+  // ... existing route
+});
+
+// Delete multiple images
+app.post('/api/images/delete-multiple', async (req, res) => {
+  // ... existing route
+});
+
+// Album management
+
+// Create album
+app.post('/api/albums', async (req, res) => {
+  // ... existing route
+});
+
+// Get all albums
+app.get('/api/albums', async (req, res) => {
+  // ... existing route
+});
+
+// Get images in an album
+app.get('/api/albums/:id/images', async (req, res) => {
+  // ... existing route
+});
+
+// Add images to album
+app.post('/api/albums/:id/images', async (req, res) => {
+  // ... existing route
+});
+
+// Helper function to generate mock metadata for testing
+function generateMockMetadata() {
+  // ... existing function
+}
+
+// Simple function to extract criteria for mock mode
+function extractMockCriteria(query) {
+  // ... existing function
+}
+
+// Serve exports directory for downloads
+app.use('/exports', express.static(path.join(__dirname, 'exports')));
+app.use('/backups', express.static(path.join(__dirname, 'backups')));
+
+// Add a route to serve the app
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+// Catch all route for SPA
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
+
+// Start server
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
